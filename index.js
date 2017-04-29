@@ -21,9 +21,9 @@ controller.on('facebook_optin', (bot, message) => {
 });
 
 // user said hello
-controller.hears(['hello'], 'message_received', (bot, message) => {
-  bot.reply(message, 'Hey there.');
-});
+// controller.hears(['hello'], 'message_received', (bot, message) => {
+//   bot.reply(message, 'Hey there.');
+// });
 
 controller.on('message_received', (bot, message) => {
   if (!message.text) {
@@ -36,28 +36,22 @@ controller.on('message_received', (bot, message) => {
 
 controller.on('image_received', function(bot, message) {
   const attachment = {
-    'type': 'template',
-    'payload': {
-      'template_type': 'button',
-      'text': 'What do you think of this park?',
-      'buttons': [
-        {
-          'type': 'postback',
-          'title': '👍',
-          'payload': 'LIKE'
-        },
-        {
-          'type': 'postback',
-          'title': '👎',
-          'payload': 'NOT_LIKE'
-        }
-      ]
-    }
+    'text': 'What do you think of this park?',
+    'quick_replies': [
+      {
+        'type': 'postback',
+        'title': '👍',
+        'payload': 'LIKE'
+      },
+      {
+        'type': 'postback',
+        'title': '👎',
+        'payload': 'NOT_LIKE'
+      }
+    ]
   }
 
-  bot.reply(message, {
-    attachment
-  });
+  bot.replyWithTyping(message, { attachment });
 });
 
 // controller.hears(['cookies'], 'message_received', (bot, message) => {
