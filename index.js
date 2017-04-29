@@ -15,67 +15,66 @@ controller.setupWebserver(process.env.PORT || 3000, (err, webserver) => {
   });
 });
 
+controller.api.thread_settings.greeting('Hey thanks for coming to talk to us. We are Sustaincity and we want to create cleaner parks that we can all roll around in. We\'ll be asking you 3 questions to help us do exactly that');
+
 // this is triggered when a user clicks the send-to-messenger plugin
 controller.on('facebook_optin', (bot, message) => {
   bot.reply(message, 'Welcome to my app!');
 });
 
-// user said hello
-// controller.hears(['hello'], 'message_received', (bot, message) => {
-//   bot.reply(message, 'Hey there.');
-// });
-
 controller.on('message_received', (bot, message) => {
+  console.log(message);
   if (!message.text) {
     if (message.attachments && message.attachments[0]) {
-      controller.trigger(message.attachments[0].type + '_received', [bot, message]);
+      // controller.trigger(message.attachments[0].type + '_received', [bot, message]);
+      convo.say('Your picture has been received, thank you.');
       return false;
     }
   }
 });
 
-controller.on('image_received', function(bot, message) {
+controller.hears(['feedback'], 'message_received', function(bot, message) {
   bot.startConversation(message, (err, convo) => {
     const opinion = {
-      'text': 'What do you think of this park?',
+      'text': 'Tell us how you feel about this park.',
       'quick_replies': [
         {
           'type': 'postback',
-          'title': '👍',
-          'payload': 'LIKE'
+          'title': '🙂',
+          'payload': 'HAPPY'
         },
         {
           'type': 'postback',
-          'title': '👎',
-          'payload': 'NOT_LIKE'
-        }
-      ]
-    };
-    const location = {
-      'text': 'Where are you?',
-      'quick_replies': [
+          'title': '☹️',
+          'payload': 'SAD'
+        },
         {
-          'content_type': 'location'
+          'type': 'postback',
+          'title': '😡',
+          'payload': 'ANGRY'
         }
       ]
     };
 
     convo.ask(opinion, (response, convo) => {
-      convo.ask(opinion, (response, convo) => {
-        console.log(response);
-        convo.say('Thank you for your help!');
-        convo.next();
-      });
+      convo.say('Please send us a picture.');
+      convo.next();
     });
   });
 });
 
-// controller.hears(['cookies'], 'message_received', (bot, message) => {
-//   bot.startConversation(message, (err, convo) => {
-//     convo.say('Did someone say cookies!?!!');
-//     convo.ask('What is your favorite type of cookie?', (response, convo) => {
-//       convo.say('Golly, I love ' + response.text + ' too!!!');
-//       convo.next();
-//     });
-//   });
-// });
+controller.hears(['location'], 'message_received', (bot, message) => {
+  const location = {
+    'text': 'Where are you?',
+    'quick_replies': [
+      {
+        'content_type': 'location'
+      }
+    ]
+  };
+
+  convo.ask(location, (response, convo) => {
+      convo.say('Got your location.');
+      convo.next();
+    });
+});
