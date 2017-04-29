@@ -26,22 +26,15 @@ controller.hears(['hello'], 'message_received', (bot, message) => {
 });
 
 controller.on('message_received', (bot, message) => {
-  console.log(message);
-  console.log(message.attachments);
-  bot.reply(message, 'Got it!');
+  if (!message.text) {
+    if (message.attachments && message.attachments[0]) {
+      controller.trigger(message.attachments[0].type + '_received', [bot, message]);
+      return false;
+    }
+  }
 });
 
-controller.hears(['cookies'], 'message_received', (bot, message) => {
-  bot.startConversation(message, (err, convo) => {
-    convo.say('Did someone say cookies!?!!');
-    convo.ask('What is your favorite type of cookie?', (response, convo) => {
-      convo.say('Golly, I love ' + response.text + ' too!!!');
-      convo.next();
-    });
-  });
-});
-
-controller.hears(['test'], 'message_received', (bot, message) => {
+controller.on('image_received', function(bot, message) {
   const attachment = {
     'type': 'template',
     'payload': {
@@ -66,3 +59,13 @@ controller.hears(['test'], 'message_received', (bot, message) => {
     attachment
   });
 });
+
+// controller.hears(['cookies'], 'message_received', (bot, message) => {
+//   bot.startConversation(message, (err, convo) => {
+//     convo.say('Did someone say cookies!?!!');
+//     convo.ask('What is your favorite type of cookie?', (response, convo) => {
+//       convo.say('Golly, I love ' + response.text + ' too!!!');
+//       convo.next();
+//     });
+//   });
+// });
