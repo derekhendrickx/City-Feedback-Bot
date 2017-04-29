@@ -16,12 +16,12 @@ controller.setupWebserver(process.env.PORT || 3000, (err, webserver) => {
 });
 
 // this is triggered when a user clicks the send-to-messenger plugin
-controller.on('facebook_optin', function(bot, message) {
+controller.on('facebook_optin', (bot, message) => {
   bot.reply(message, 'Welcome to my app!');
 });
 
 // user said hello
-controller.hears(['hello'], 'message_received', function(bot, message) {
+controller.hears(['hello'], 'message_received', (bot, message) => {
   bot.reply(message, 'Hey there.');
 });
 
@@ -32,5 +32,31 @@ controller.hears(['cookies'], 'message_received', function(bot, message) {
       convo.say('Golly, I love ' + response.text + ' too!!!');
       convo.next();
     });
+  });
+});
+
+controller.hears('like', (bot, message) => {
+  const attachment = {
+    'type': 'template',
+    'payload': {
+      'template_type': 'button',
+      'text': 'What do you think of this park?',
+      'buttons': [
+        {
+          'type': 'postback',
+          'title': '👍',
+          'payload': 'USER_DEFINED_PAYLOAD'
+        },
+        {
+          'type': 'postback',
+          'title': '👎',
+          'payload': 'USER_DEFINED_PAYLOAD'
+        }
+      ]
+    }
+  }
+
+  bot.reply(message, {
+    attachment: attachment,
   });
 });
