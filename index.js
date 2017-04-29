@@ -25,8 +25,9 @@ controller.hears(['hello'], 'message_received', (bot, message) => {
   bot.reply(message, 'Hey there.');
 });
 
-controller.hears('message_received', (bot, message) => {
+controller.on('message_received', (bot, message) => {
   console.log(message);
+  console.log(message.attachments);
   bot.reply(message, 'Got it!');
 });
 
