@@ -51,10 +51,21 @@ controller.on('image_received', function(bot, message) {
         }
       ]
     };
+    const location = {
+      'text': 'Where are you?',
+      'quick_replies': [
+        {
+          'content_type': 'location'
+        }
+      ]
+    };
 
-    convo.ask(opinion, (err, convo) => {
-      convo.say('Thank you for your help!');
-      convo.next();
+    convo.ask(opinion, (response, convo) => {
+      convo.ask(opinion, (response, convo) => {
+        console.log(response);
+        convo.say('Thank you for your help!');
+        convo.next();
+      });
     });
   });
 });
