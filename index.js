@@ -35,7 +35,7 @@ controller.hears(['cookies'], 'message_received', (bot, message) => {
   });
 });
 
-controller.hears(['test'], (bot, message) => {
+controller.hears(['test'], 'message_received', (bot, message) => {
   const attachment = {
     'type': 'template',
     'payload': {
@@ -44,12 +44,12 @@ controller.hears(['test'], (bot, message) => {
       'buttons': [
         {
           'type': 'postback',
-          'title': 'Like',
+          'title': '👍',
           'payload': 'LIKE'
         },
         {
           'type': 'postback',
-          'title': 'Not like',
+          'title': '👎',
           'payload': 'NOT_LIKE'
         }
       ]
