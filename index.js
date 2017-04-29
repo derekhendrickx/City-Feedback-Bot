@@ -25,6 +25,11 @@ controller.hears(['hello'], 'message_received', (bot, message) => {
   bot.reply(message, 'Hey there.');
 });
 
+controller.hears('message_received', (bot, message) => {
+  console.log(message);
+  bot.reply(message, 'Got it!');
+});
+
 controller.hears(['cookies'], 'message_received', (bot, message) => {
   bot.startConversation(message, (err, convo) => {
     convo.say('Did someone say cookies!?!!');
