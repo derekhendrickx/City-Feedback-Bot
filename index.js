@@ -15,7 +15,7 @@ controller.setupWebserver(process.env.PORT || 3000, (err, webserver) => {
   });
 });
 
-controller.api.thread_settings.greeting('Hey thanks for coming to talk to us. We are Sustaincity and we want to create cleaner parks that we can all roll around in. We\'ll be asking you 3 questions to help us do exactly that');
+controller.api.thread_settings.greeting('Hey thanks for coming to talk to us. We are Sustaincity and we want to create cleaner parks that we can all roll around in.');
 
 // this is triggered when a user clicks the send-to-messenger plugin
 controller.on('facebook_optin', (bot, message) => {
