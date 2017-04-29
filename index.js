@@ -35,23 +35,28 @@ controller.on('message_received', (bot, message) => {
 });
 
 controller.on('image_received', function(bot, message) {
-  const attachment = {
-    'text': 'What do you think of this park?',
-    'quick_replies': [
-      {
-        'type': 'postback',
-        'title': '👍',
-        'payload': 'LIKE'
-      },
-      {
-        'type': 'postback',
-        'title': '👎',
-        'payload': 'NOT_LIKE'
-      }
-    ]
-  }
+  bot.startConversation(message, (err, convo) => {
+    const opinion = {
+      'text': 'What do you think of this park?',
+      'quick_replies': [
+        {
+          'type': 'postback',
+          'title': '👍',
+          'payload': 'LIKE'
+        },
+        {
+          'type': 'postback',
+          'title': '👎',
+          'payload': 'NOT_LIKE'
+        }
+      ]
+    };
 
-  bot.replyWithTyping(message, { attachment });
+    convo.ask(opinion, (err, convo) => {
+      convo.say('Thank you for your help!');
+      convo.next();
+    });
+  });
 });
 
 // controller.hears(['cookies'], 'message_received', (bot, message) => {
