@@ -1,0 +1,22 @@
+{
+  "name": "city-feedback-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derekhendrickx/City-Feedback-Bot.git"
+  },
+  "author": "Derek Hendrickx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/derekhendrickx/City-Feedback-Bot/issues"
+  },
+  "homepage": "https://github.com/derekhendrickx/City-Feedback-Bot#readme",
+  "dependencies": {
+    "botkit": "^0.5.4"
+  }
+}
