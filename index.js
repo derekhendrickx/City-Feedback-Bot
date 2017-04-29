@@ -27,7 +27,7 @@ controller.on('message_received', (bot, message) => {
   if (!message.text) {
     if (message.attachments && message.attachments[0]) {
       // controller.trigger(message.attachments[0].type + '_received', [bot, message]);
-      convo.say('Your picture has been received, thank you.');
+      bot.say('Your picture has been received, thank you.');
       return false;
     }
   }
