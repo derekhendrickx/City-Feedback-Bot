@@ -9,7 +9,7 @@ const bot = controller.spawn({});
 
 // if you are already using Express, you can use your own server instance...
 // see "Use BotKit with an Express web server"
-controller.setupWebserver(process.env.port, (err, webserver) => {
+controller.setupWebserver(process.env.port || 3000, (err, webserver) => {
   controller.createWebhookEndpoints(controller.webserver, bot, () => {
     console.log('This bot is online!!!');
   });
