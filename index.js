@@ -35,7 +35,7 @@ controller.hears(['cookies'], 'message_received', function(bot, message) {
   });
 });
 
-controller.hears('like', (bot, message) => {
+controller.hears(['test'], (bot, message) => {
   const attachment = {
     'type': 'template',
     'payload': {
@@ -44,19 +44,19 @@ controller.hears('like', (bot, message) => {
       'buttons': [
         {
           'type': 'postback',
-          'title': '👍',
-          'payload': 'USER_DEFINED_PAYLOAD'
+          'title': 'Like',
+          'payload': 'LIKE'
         },
         {
           'type': 'postback',
-          'title': '👎',
-          'payload': 'USER_DEFINED_PAYLOAD'
+          'title': 'Not like',
+          'payload': 'NOT_LIKE'
         }
       ]
     }
   }
 
   bot.reply(message, {
-    attachment: attachment,
+    attachment
   });
 });
