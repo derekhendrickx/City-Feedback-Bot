@@ -64,17 +64,29 @@ controller.hears(['feedback'], 'message_received', function(bot, message) {
 });
 
 controller.hears(['location'], 'message_received', (bot, message) => {
-  const location = {
-    'text': 'Where are you?',
-    'quick_replies': [
-      {
-        'content_type': 'location'
-      }
-    ]
-  };
+  bot.startConversation(message, (err, convo) => {
+    const location = {
+      'text': 'Where are you?',
+      'quick_replies': [
+        {
+          'content_type': 'location'
+        }
+      ]
+    };
 
-  convo.ask(location, (response, convo) => {
+    convo.ask(location, (response, convo) => {
       convo.say('Got your location.');
       convo.next();
     });
+  });
+});
+
+controller.hears(['send'], 'message_received', (bot, message) => {
+  bot.startConversation(message, (err, convo) => {
+    convo.ask('Where are you ?', (response, convo) => {
+      console.log(convo);
+      convo.say('Got your location.');
+      convo.next();
+    });
+  });
 });
