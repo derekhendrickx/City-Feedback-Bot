@@ -64,20 +64,14 @@ controller.hears(['feedback'], 'message_received', function(bot, message) {
       ]
     };
 
-    convo.addQuestion(opinion, (response, convo) => {
-
-      convo.say('Thank your for your answer.');
+    convo.ask(opinion, (response, convo) => {
       convo.next();
-
-    }, {}, 'default');
-
-    convo.addQuestion(location, (response, convo) => {
-
-      console.log(response);
-      convo.say('Got your location.');
-      convo.next();
-
-    }, {}, 'default');
+      convo.ask(location, (response, convo) => {
+        console.log(response.attachments[0].payload);
+        convo.say('Got your location.');
+        convo.next();
+      });
+    });
   });
 });
 
