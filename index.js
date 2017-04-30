@@ -66,9 +66,12 @@ controller.hears(['feedback'], 'message_received', function(bot, message) {
     };
 
     convo.ask(location, (response, convo) => {
+      console.log('Location', response.attachments[0].payload);
       convo.next();
+
       convo.ask(opinion, (response, convo) => {
-        console.log('Location', response.attachments[0].payload);
+        convo.next();
+        
         convo.ask('Why ? Send us a picture of the park.', (response, convo) => {
           console.log('Picture', response.attachments[0].payload);
           convo.say('Thank you!');
