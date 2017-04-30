@@ -65,27 +65,30 @@ controller.hears(['feedback'], 'message_received', function(bot, message) {
         },
         {
           'type': 'postback',
-          'title': '☹️',
+          'title': '😟',
           'payload': 'SAD'
         },
         {
           'type': 'postback',
-          'title': '😡',
+          'title': '😠',
           'payload': 'ANGRY'
         }
       ]
     };
 
     convo.ask(location, (response, convo) => {
-      console.log('Location', response.attachments[0].payload);
+      let coordinates = response.attachments[0].payload;
+      console.log('Location', coordinates);
       convo.next();
 
       convo.ask(opinion, (response, convo) => {
         convo.next();
 
         convo.ask('Why ? Send us a picture of the park.', (response, convo) => {
-          console.log('Picture', response.attachments[0].payload);
-          convo.say('Thank you!');
+          let picture = response.attachments[0].payload;
+          console.log('Picture', picture);
+
+          convo.say('You did so well! Thanks for making this park a better place. With your feedback we are doing some really cool stuff at http://www.sustaincity.space Come check us out!');
           convo.next();
         });
       });
