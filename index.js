@@ -23,7 +23,8 @@ controller.on('facebook_optin', (bot, message) => {
 });
 
 controller.on('message_received', (bot, message) => {
-  console.log(message);
+  console.log(message.attachments[0]);
+  console.log(message.attachments[0].payload);
   if (!message.text) {
     if (message.attachments && message.attachments[0]) {
       // controller.trigger(message.attachments[0].type + '_received', [bot, message]);
@@ -35,6 +36,14 @@ controller.on('message_received', (bot, message) => {
 
 controller.hears(['feedback'], 'message_received', function(bot, message) {
   bot.startConversation(message, (err, convo) => {
+    const location = {
+      'text': 'Where are you?',
+      'quick_replies': [
+        {
+          'content_type': 'location'
+        }
+      ]
+    };
     const opinion = {
       'text': 'Tell us how you feel about this park.',
       'quick_replies': [
@@ -55,50 +64,17 @@ controller.hears(['feedback'], 'message_received', function(bot, message) {
         }
       ]
     };
-    const location = {
-      'text': 'Where are you?',
-      'quick_replies': [
-        {
-          'content_type': 'location'
-        }
-      ]
-    };
-
-    convo.ask(opinion, (response, convo) => {
-      convo.next();
-      convo.ask(location, (response, convo) => {
-        console.log(response.attachments[0].payload);
-        convo.say('Got your location.');
-        convo.next();
-      });
-    });
-  });
-});
-
-controller.hears(['location'], 'message_received', (bot, message) => {
-  bot.startConversation(message, (err, convo) => {
-    const location = {
-      'text': 'Where are you?',
-      'quick_replies': [
-        {
-          'content_type': 'location'
-        }
-      ]
-    };
 
     convo.ask(location, (response, convo) => {
-      convo.say('Got your location.');
       convo.next();
-    });
-  });
-});
-
-controller.hears(['send'], 'message_received', (bot, message) => {
-  bot.startConversation(message, (err, convo) => {
-    convo.ask('Where are you ?', (response, convo) => {
-      console.log(convo);
-      convo.say('Got your location.');
-      convo.next();
+      convo.ask(opinion, (response, convo) => {
+        console.log('Location', response.attachments[0].payload);
+        convo.ask('Why ? Send us a picture of the park.', (response, convo) => {
+          console.log('Picture', response.attachments[0].payload);
+          convo.say('Thank you!');
+          convo.next();
+        });
+      });
     });
   });
 });
