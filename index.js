@@ -23,9 +23,9 @@ controller.on('facebook_optin', (bot, message) => {
 });
 
 controller.on('message_received', (bot, message) => {
-  console.log(message.attachments[0]);
-  console.log(message.attachments[0].payload);
   if (!message.text) {
+    console.log(message.attachments[0]);
+    console.log(message.attachments[0].payload);
     if (message.attachments && message.attachments[0]) {
       // controller.trigger(message.attachments[0].type + '_received', [bot, message]);
       bot.say('Your picture has been received, thank you.');
